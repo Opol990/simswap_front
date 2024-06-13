@@ -1,0 +1,5 @@
+.category-sort {
+    margin-top: -100px; /* Ajustamos el margen superior para que los componentes aparezcan justo debajo del header */
+    z-index: 1;
+    position: relative;
+}

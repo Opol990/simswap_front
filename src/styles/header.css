@@ -1,0 +1,23 @@
+.header {
+    background: #001529; /* Color de fondo oscuro para el header */
+    height: 64px; /* Altura estándar del header */
+    display: flex;
+    align-items: center; /* Centrar elementos verticalmente */
+    justify-content: space-between; /* Espacio entre elementos para posicionar el menú a la izquierda y el botón de perfil a la derecha */
+    padding: 0 20px; /* Espaciado horizontal */
+    position: relative;
+    margin: 0;
+}
+
+.menu {
+    width: auto; /* Ajustamos el ancho del menú */
+    background: transparent;
+    position: relative; /* Posición relativa */
+    top: auto; /* Restablecemos la posición superior */
+    left: auto; /* Restablecemos la posición izquierda */
+}
+
+.profile-button {
+    margin-left: auto; /* Empujar el botón de perfil a la derecha */
+    color: #ffffff; /* Color de texto blanco */
+}

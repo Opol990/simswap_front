@@ -1,0 +1,8 @@
+.sort-options {
+    width: 200px;
+    margin: 20px auto;
+}
+
+.sort-options .ant-select {
+    width: 100%;
+}
