@@ -96,7 +96,7 @@ const MisChats: React.FC = () => {
           onClose={handleCloseChat}
         />
       )}
-    </div>
+    </div>  
   );
 };
 
