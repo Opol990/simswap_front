@@ -1,24 +1,20 @@
-import React, { useEffect } from 'react';
+// src/App.tsx
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from './store/store';
-import { fetchUserDetails } from './store/slices/userSlice';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import UserProfile from './components/UserProfile';
 import { ConfigProvider } from 'antd';
+import CheckoutSuccess from './components/CheckoutSuccess';
 
 const App: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-  const token = useSelector((state: RootState) => state.user.token);
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('token') !== null);
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchUserDetails());
-    }
-  }, [dispatch, token]);
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(token !== null);
+  });
 
   return (
     <ConfigProvider>
@@ -34,6 +30,7 @@ const App: React.FC = () => {
             path="/profile"
             element={isAuthenticated ? <UserProfile /> : <Navigate to="/login" />}
           />
+          <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
         </Routes>
       </Router>

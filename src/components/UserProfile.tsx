@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+// src/components/UserProfile.tsx
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Layout, Menu } from 'antd';
 import HeaderComponent from '../components/HeaderComponent';
 import InformacionGeneral from '../components/InformacionGeneral';
 import MisProductos from '../components/MisProductos';
 import MisChats from '../components/MisChats';
 import "../styles/userProfile.css";
+import { AppDispatch } from '../store/store';
+import { fetchUserDetails } from '../store/slices/userSlice';
 
 const { Content } = Layout;
 
 const UserProfile: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [selectedMenu, setSelectedMenu] = useState('1');
+
+  useEffect(() => {
+    dispatch(fetchUserDetails());
+  }, [dispatch]);
 
   const renderSection = () => {
     switch (selectedMenu) {

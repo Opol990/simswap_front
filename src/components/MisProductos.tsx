@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
 import { Button, Card, List, Modal, Dropdown, Menu } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { fetchUserProducts, deleteUserProduct, updateUserProduct, createUserProduct } from '../store/slices/productsSlice';
 import { ProductModel } from '../models/models';
-import ProductForm from './ProductForm';
+import ProductForm from './ProductForm'
+import "../styles/misProductos.css";
 
 const MisProductos: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -42,41 +44,76 @@ const MisProductos: React.FC = () => {
   };
 
   const handleUpdateProduct = (values: any) => {
-    if (editProduct) {
-      dispatch(updateUserProduct({ ...editProduct, ...values, producto_id: editProduct.producto_id }));
-      setIsEditModalVisible(false);
+    if (editProduct && currentUser) {
+      dispatch(updateUserProduct({ ...editProduct, ...values, producto_id: editProduct.producto_id })).then(() => {
+        setIsEditModalVisible(false);
+        dispatch(fetchUserProducts(currentUser.usuario_id)); // Forzar actualización de los productos
+      });
     }
   };
 
-  const menu = (product: ProductModel) => (
+  const menu = (product: ProductModel, isSold: boolean) => (
     <Menu>
-      <Menu.Item key="1" onClick={() => handleEditProduct(product)}>Editar</Menu.Item>
-      <Menu.Item key="2" onClick={() => handleDeleteProduct(product.producto_id)}>Eliminar</Menu.Item>
+      <Menu.Item key="1" onClick={() => handleEditProduct(product)} disabled={isSold}>Editar</Menu.Item>
+      <Menu.Item key="2" onClick={() => handleDeleteProduct(product.producto_id)} disabled={isSold}>Eliminar</Menu.Item>
     </Menu>
   );
+
+  const renderProductCard = (product: ProductModel, isSold: boolean) => (
+    <Card
+      key={product.producto_id}
+      title={
+        <div className="product-card-header">
+          {product.nombre_producto}
+          <Dropdown overlay={menu(product, isSold)} trigger={['click']}>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              <EllipsisOutlined style={{ fontSize: '24px', transform: 'rotate(90deg)' }} />
+            </a>
+          </Dropdown>
+        </div>
+      }
+      className={isSold ? 'sold-product' : ''}
+    >
+      <p>Marca: {product.marca}</p>
+      <p>Modelo: {product.modelo}</p>
+      <p>Precio: {product.precio}€</p>
+      <p>Descripción: {product.descripcion}</p>
+      <p>Localización: {product.localizacion}</p>
+      <p>Categoría: {product.categoria}</p>
+      {isSold && <p className="sold-label">Vendido</p>}
+    </Card>
+  );
+
+  const availableProducts = products.filter(product => product.disponibilidad === 'disponible');
+  const soldProducts = products.filter(product => product.disponibilidad === 'vendido');
 
   return (
     <div>
       <h2>Mis Productos</h2>
       <Button type="primary" onClick={() => setIsNewModalVisible(true)}>Añadir Nuevo Producto</Button>
+
+      <h3>Disponibles</h3>
       <List
         grid={{ gutter: 16, column: 4 }}
-        dataSource={products}
+        dataSource={availableProducts}
         renderItem={(product: ProductModel) => (
           <List.Item>
-            <Card title={product.nombre_producto} extra={
-              <Dropdown overlay={menu(product)} trigger={['click']}>
-                <Button type="text">...</Button>
-              </Dropdown>
-            }>
-              <p>{product.descripcion}</p>
-              <p>{product.precio} €</p>
-              <p>{product.localizacion}</p>
-              <p>Categoría: {product.categoria}</p>
-            </Card>
+            {renderProductCard(product, false)}
           </List.Item>
         )}
       />
+
+      <h3>Vendidos</h3>
+      <List
+        grid={{ gutter: 16, column: 4 }}
+        dataSource={soldProducts}
+        renderItem={(product: ProductModel) => (
+          <List.Item>
+            {renderProductCard(product, true)}
+          </List.Item>
+        )}
+      />
+
       <Modal
         title="Editar Producto"
         visible={isEditModalVisible}
@@ -101,3 +138,4 @@ const MisProductos: React.FC = () => {
 };
 
 export default MisProductos;
+

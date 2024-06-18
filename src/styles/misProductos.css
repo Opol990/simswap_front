@@ -1,0 +1,16 @@
+/* src/styles/misProductos.css */
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .sold-product {
+    opacity: 0.6;
+  }
+  
+  .sold-label {
+    color: red;
+    font-weight: bold;
+  }
+  

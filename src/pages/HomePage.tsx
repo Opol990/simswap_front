@@ -1,3 +1,4 @@
+// src/pages/HomePage.tsx
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { RootState, AppDispatch } from '../store/store';
 import { Layout, Row, Col, Typography } from 'antd';
 import "../styles/homePage.css";
 import { ProductModel } from '../models/models';
+import { fetchUserDetails } from '../store/slices/userSlice';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -21,18 +23,18 @@ const HomePage: React.FC = () => {
   const products = useSelector((state: RootState) => state.products.filteredProducts);
   const status = useSelector((state: RootState) => state.products.status);
   const currentUser = useSelector((state: RootState) => state.user.userData);
-  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-
   const [selectedProduct, setSelectedProduct] = useState<ProductModel | null>(null);
   const [isChatVisible, setIsChatVisible] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate('/login');
     } else {
+      dispatch(fetchUserDetails());
       dispatch(fetchProducts());
     }
-  }, [isAuthenticated, navigate, dispatch]);
+  }, [navigate, dispatch]);
 
   useEffect(() => {
     console.log('Current user:', currentUser);
@@ -83,8 +85,12 @@ const HomePage: React.FC = () => {
       </Content>
       {selectedProduct && currentUser && isChatVisible && (
         <FloatingChat
-          product={selectedProduct}
-          currentUserId={currentUser.usuario_id} // Usar usuario_id en lugar de id
+          product={{ 
+            producto_id: selectedProduct.producto_id, 
+            nombre_producto: selectedProduct.nombre_producto || "Producto", 
+            precio: selectedProduct.precio 
+          }}
+          currentUserId={currentUser.usuario_id}
           sellerId={selectedProduct.vendedor_id}
           onClose={handleCloseChat}
         />

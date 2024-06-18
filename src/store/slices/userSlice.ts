@@ -1,21 +1,20 @@
+// store/slices/userSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import { RootState } from '../store';
 
 interface UserState {
-  isAuthenticated: boolean;
   userData: { id: number; [key: string]: any } | null;
   token: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null; // Agregar estado de error
+  error: string | null;
 }
 
 const initialState: UserState = {
-  isAuthenticated: false,
   userData: null,
   token: localStorage.getItem('token'),
   status: 'idle',
-  error: null, // Inicializar estado de error
+  error: null,
 };
 
 export const fetchUserDetails = createAsyncThunk('user/fetchUserDetails', async (_, { getState }) => {
@@ -39,16 +38,16 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<{ userData: { id: number; [key: string]: any }; token: string }>) => {
-      state.isAuthenticated = true;
       state.userData = action.payload.userData;
       state.token = action.payload.token;
       localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('isAuthenticated', 'true');  // Agregar esto
     },
     logout: (state) => {
-      state.isAuthenticated = false;
       state.userData = null;
       state.token = null;
       localStorage.removeItem('token');
+      localStorage.setItem('isAuthenticated', 'false');  // Agregar esto
     },
   },
   extraReducers: (builder) => {
@@ -59,14 +58,14 @@ export const userSlice = createSlice({
       .addCase(fetchUserDetails.fulfilled, (state, action: PayloadAction<{ id: number; [key: string]: any }>) => {
         state.status = 'succeeded';
         state.userData = action.payload;
-        state.isAuthenticated = true;
+        localStorage.setItem('isAuthenticated', 'true');  // Agregar esto
       })
       .addCase(fetchUserDetails.rejected, (state) => {
         state.status = 'failed';
-        state.isAuthenticated = false;
         state.token = null;
-        state.error = "Failed to fetch user details"; // Establecer mensaje de error
+        state.error = "Failed to fetch user details";
         localStorage.removeItem('token');
+        localStorage.setItem('isAuthenticated', 'false');  // Agregar esto
       })
       .addCase(updateUserDetails.pending, (state) => {
         state.status = 'loading';
@@ -74,11 +73,11 @@ export const userSlice = createSlice({
       .addCase(updateUserDetails.fulfilled, (state, action: PayloadAction<{ id: number; [key: string]: any }>) => {
         state.status = 'succeeded';
         state.userData = action.payload;
-        state.error = null; // Limpiar error en caso de éxito
+        state.error = null;
       })
       .addCase(updateUserDetails.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message || "Failed to update user details"; // Establecer mensaje de error
+        state.error = action.error.message || "Failed to update user details";
       });
   },
 });

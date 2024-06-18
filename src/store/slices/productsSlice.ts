@@ -1,3 +1,4 @@
+// store/slices/productsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import { ProductModel } from '../../models/models';
@@ -8,6 +9,7 @@ interface ProductsState {
   filteredProducts: ProductModel[];
   categories: { categoria_id: number; nombre: string }[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
 }
 
 const initialState: ProductsState = {
@@ -16,6 +18,7 @@ const initialState: ProductsState = {
   filteredProducts: [],
   categories: [],
   status: 'idle',
+  error: null,
 };
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
@@ -50,6 +53,11 @@ export const filterProductsByCategory = createAsyncThunk('products/filterProduct
 
 export const fetchCategories = createAsyncThunk('products/fetchCategories', async () => {
   const response = await axiosInstance.get('/categories');
+  return response.data;
+});
+
+export const fetchProductById = createAsyncThunk('products/fetchProductById', async (productId: number) => {
+  const response = await axiosInstance.get(`/products/${productId}`);
   return response.data;
 });
 
@@ -98,6 +106,17 @@ const productsSlice = createSlice({
       })
       .addCase(fetchCategories.fulfilled, (state, action: PayloadAction<{ categoria_id: number; nombre: string }[]>) => {
         state.categories = action.payload;
+      })
+      .addCase(fetchProductById.fulfilled, (state, action: PayloadAction<ProductModel>) => {
+        const existingProductIndex = state.products.findIndex(p => p.producto_id === action.payload.producto_id);
+        if (existingProductIndex >= 0) {
+          state.products[existingProductIndex] = action.payload;
+        } else {
+          state.products.push(action.payload);
+        }
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to fetch product details";
       });
   },
 });

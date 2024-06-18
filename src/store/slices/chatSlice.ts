@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
-import { Message } from '../../models/models';
+
+export interface Message {
+  mensaje_id: number;
+  producto_id: number;
+  id_usuario_envia: number;
+  id_usuario_recibe: number;
+  contenido: string;
+  fecha_envio: Date;
+  leido: boolean;
+}
 
 interface ChatState {
   messages: Message[];
@@ -12,18 +21,18 @@ const initialState: ChatState = {
   status: 'idle',
 };
 
-export const fetchChatMessages = createAsyncThunk(
-  'chat/fetchChatMessages',
-  async ({ productId, user1Id, user2Id }: { productId: number; user1Id: number; user2Id: number }) => {
-    const response = await axiosInstance.get(`/messages/chat/${productId}/${user1Id}/${user2Id}`);
-    return response.data;
-  }
-);
-
 export const fetchUserMessages = createAsyncThunk(
   'chat/fetchUserMessages',
   async (userId: number) => {
     const response = await axiosInstance.get(`/messages/user/${userId}`);
+    return response.data;
+  }
+);
+
+export const fetchChatMessages = createAsyncThunk(
+  'chat/fetchChatMessages',
+  async ({ productId, user1Id, user2Id }: { productId: number; user1Id: number; user2Id: number }) => {
+    const response = await axiosInstance.get(`/messages/chat/${productId}/${user1Id}/${user2Id}`);
     return response.data;
   }
 );
@@ -42,16 +51,6 @@ const chatSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChatMessages.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchChatMessages.fulfilled, (state, action: PayloadAction<Message[]>) => {
-        state.status = 'succeeded';
-        state.messages = action.payload;
-      })
-      .addCase(fetchChatMessages.rejected, (state) => {
-        state.status = 'failed';
-      })
       .addCase(fetchUserMessages.pending, (state) => {
         state.status = 'loading';
       })
@@ -60,6 +59,16 @@ const chatSlice = createSlice({
         state.messages = action.payload;
       })
       .addCase(fetchUserMessages.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(fetchChatMessages.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchChatMessages.fulfilled, (state, action: PayloadAction<Message[]>) => {
+        state.status = 'succeeded';
+        state.messages = action.payload;
+      })
+      .addCase(fetchChatMessages.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(sendMessage.fulfilled, (state, action: PayloadAction<Message>) => {
