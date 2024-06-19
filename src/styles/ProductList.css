@@ -1,0 +1,44 @@
+/* src/styles/ProductList.css */
+
+.product-list {
+    padding: 20px;
+  }
+  
+  .product-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product-card {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    border-radius: 10px 10px 0 0;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .product-detail {
+    color: #333; /* Texto oscuro */
+    margin: 5px 0;
+  }
+  
+  .chat-button {
+    background-color: #f9b233;
+    border-color: #f9b233;
+    color: #333;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .chat-button:hover {
+    background-color: #ff8f00;
+    border-color: #ff8f00;
+    color: #fff;
+  }
+  

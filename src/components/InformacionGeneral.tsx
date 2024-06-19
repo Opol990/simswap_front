@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
 import { Form, Input, Button, Modal } from 'antd';
 import { fetchUserDetails, updateUserDetails } from '../store/slices/userSlice';
+import '../styles/informacionGeneral.css';
 
 const InformacionGeneral: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -21,11 +22,11 @@ const InformacionGeneral: React.FC = () => {
   useEffect(() => {
     if (isUpdating) {
       if (updateStatus === 'succeeded') {
-        setModalContent({ title: 'Success', message: 'User details updated successfully.' });
+        setModalContent({ title: 'Éxito', message: 'Detalles del usuario actualizados con éxito.' });
         setIsModalVisible(true);
         setIsUpdating(false);
       } else if (updateStatus === 'failed') {
-        setModalContent({ title: 'Error', message: updateError || 'Failed to update user details.' });
+        setModalContent({ title: 'Error', message: updateError || 'No se pudieron actualizar los detalles del usuario.' });
         setIsModalVisible(true);
         setIsUpdating(false);
       }
@@ -42,7 +43,7 @@ const InformacionGeneral: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="info-container">
       <h2>Información Personal</h2>
       {currentUser && (
         <Form
@@ -80,6 +81,11 @@ const InformacionGeneral: React.FC = () => {
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
+        footer={[
+          <Button key="submit" type="primary" onClick={handleModalOk}>
+            Aceptar
+          </Button>
+        ]}
       >
         <p>{modalContent.message}</p>
       </Modal>

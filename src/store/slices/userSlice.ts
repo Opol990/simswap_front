@@ -1,4 +1,3 @@
-// store/slices/userSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import { RootState } from '../store';
@@ -41,13 +40,13 @@ export const userSlice = createSlice({
       state.userData = action.payload.userData;
       state.token = action.payload.token;
       localStorage.setItem('token', action.payload.token);
-      localStorage.setItem('isAuthenticated', 'true');  // Agregar esto
+      state.status = 'succeeded';
     },
     logout: (state) => {
       state.userData = null;
       state.token = null;
       localStorage.removeItem('token');
-      localStorage.setItem('isAuthenticated', 'false');  // Agregar esto
+      state.status = 'idle';
     },
   },
   extraReducers: (builder) => {
@@ -58,14 +57,12 @@ export const userSlice = createSlice({
       .addCase(fetchUserDetails.fulfilled, (state, action: PayloadAction<{ id: number; [key: string]: any }>) => {
         state.status = 'succeeded';
         state.userData = action.payload;
-        localStorage.setItem('isAuthenticated', 'true');  // Agregar esto
       })
       .addCase(fetchUserDetails.rejected, (state) => {
         state.status = 'failed';
         state.token = null;
         state.error = "Failed to fetch user details";
         localStorage.removeItem('token');
-        localStorage.setItem('isAuthenticated', 'false');  // Agregar esto
       })
       .addCase(updateUserDetails.pending, (state) => {
         state.status = 'loading';

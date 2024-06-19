@@ -1,23 +1,41 @@
+/* src/styles/header.css */
 .header {
-    background: #001529; /* Color de fondo oscuro para el header */
-    height: 64px; /* Altura estándar del header */
     display: flex;
-    align-items: center; /* Centrar elementos verticalmente */
-    justify-content: space-between; /* Espacio entre elementos para posicionar el menú a la izquierda y el botón de perfil a la derecha */
-    padding: 0 20px; /* Espaciado horizontal */
-    position: relative;
-    margin: 0;
-}
-
-.menu {
-    width: auto; /* Ajustamos el ancho del menú */
-    background: transparent;
-    position: relative; /* Posición relativa */
-    top: auto; /* Restablecemos la posición superior */
-    left: auto; /* Restablecemos la posición izquierda */
-}
-
-.profile-button {
-    margin-left: auto; /* Empujar el botón de perfil a la derecha */
-    color: #ffffff; /* Color de texto blanco */
-}
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9b233; /* Fondo amarillo suave */
+    padding: 0 20px;
+    height: 64px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    color: #333; /* Texto de color oscuro */
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .menu-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .menu-buttons .ant-btn {
+    background-color: #f9b233; /* Mantén el fondo amarillo suave */
+    border-color: #f9b233;
+    color: #333; /* Texto oscuro */
+  }
+  
+  .menu-buttons .ant-btn:hover {
+    background-color: #ff8f00; /* Fondo anaranjado al pasar el ratón */
+    border-color: #ff8f00;
+  }
+  
+  .menu-buttons .ant-btn-text {
+    color: #333; /* Texto oscuro */
+  }
+  
+  .menu-buttons .ant-btn-text:hover {
+    color: #ff8f00; /* Texto anaranjado al pasar el ratón */
+  }
+  

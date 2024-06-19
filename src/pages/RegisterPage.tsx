@@ -1,8 +1,10 @@
+// src/pages/RegisterPage.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Input, Button, Typography, Alert, Select } from 'antd';
 import { getGeolocation } from '../utils/geolocation';
+import "../styles/registerPage.css";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -42,8 +44,6 @@ const RegisterPage: React.FC = () => {
 
   const handleRegister = async () => {
     try {
-      console.log("--------------------------")
-      console.log(ubicacion)
       const response = await axios.post('http://localhost:8000/users/signup', {
         username,
         nombre,
@@ -64,8 +64,8 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div style={{ width: '300px' }}>
+    <div className="register-page">
+      <div className="register-card">
         <Title level={2}>Registrarse</Title>
         {error && <Alert message={error} type="error" showIcon />}
         <Form layout="vertical" onFinish={handleRegister}>

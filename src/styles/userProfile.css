@@ -1,14 +1,27 @@
-.user-profile {
-    padding: 20px;
-  }
-  
-  .profile-menu {
-    margin-bottom: 20px;
-  }
-  
-  .profile-content {
-    background: #fff;
-    padding: 24px;
-    min-height: 280px;
-  }
-  
+/* src/styles/userProfile.css */
+
+.profile-menu {
+  background-color: #f9b233; /* Fondo amarillo suave */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-menu .ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.profile-menu .ant-menu-item {
+  color: #333; /* Texto oscuro */
+}
+
+.profile-menu .ant-menu-item-selected {
+  background-color: #ff8f00 !important; /* Anaranjado al seleccionar */
+  color: #fff !important; /* Texto blanco */
+}
+
+.profile-content {
+  background-color: #f5f5f5; /* Fondo gris claro */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

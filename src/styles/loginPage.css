@@ -1,0 +1,33 @@
+/* src/styles/LoginPage.css */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .login-card {
+    width: 300px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .login-form-button {
+    width: 100%;
+    background-color: #f9b233;
+    border-color: #f9b233;
+  }
+  
+  .login-form-button:hover {
+    background-color: #ff8f00;
+    border-color: #ff8f00;
+  }
+  
+  .register-link {
+    text-align: center;
+    margin-top: 16px;
+  }
+  

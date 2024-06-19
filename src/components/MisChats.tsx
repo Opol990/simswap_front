@@ -6,6 +6,7 @@ import { fetchUserMessages } from '../store/slices/chatSlice';
 import { List, Button, Badge } from 'antd';
 import FloatingChat from './FloatingChat';
 import { Message } from '../models/models';
+import '../styles/misChats.css';
 
 const MisChats: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -48,7 +49,7 @@ const MisChats: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="chats-container">
       <h2>Mis Chats</h2>
       {status === 'loading' && <p>Cargando...</p>}
       {status === 'failed' && <p>Error al cargar los chats</p>}
@@ -61,19 +62,19 @@ const MisChats: React.FC = () => {
             const unreadMessages = messages.filter(message => message.id_usuario_recibe === currentUser?.usuario_id && !message.leido).length;
             const product = products.find(p => p.producto_id === productId);
             return (
-              <List.Item>
+              <List.Item className="chat-item">
                 <List.Item.Meta
                   title={
                     <>
-                      Producto: {product?.nombre_producto || `ID: ${productId}`}
+                      <span className="product-title">Producto: {product?.nombre_producto || `ID: ${productId}`}</span>
                       {unreadMessages > 0 && (
                         <Badge count={unreadMessages} style={{ backgroundColor: '#f5222d', marginLeft: '10px' }} />
                       )}
                     </>
                   }
                   description={
-                    <div>
-                      <Button onClick={() => handleOpenChat(productId, userId)}>
+                    <div className="chat-button-container">
+                      <Button type="primary" onClick={() => handleOpenChat(productId, userId)}>
                         Chat con Usuario ID: {userId}
                       </Button>
                     </div>

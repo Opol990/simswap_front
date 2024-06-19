@@ -1,0 +1,40 @@
+/* src/styles/RegisterPage.css */
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .register-card {
+    width: 300px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  button {
+    background-color: #f9b233; /* Amarillo suave para el botón */
+    border-color: #f9b233; /* Borde del mismo color */
+  }
+  
+  button:hover {
+    background-color: #ff8f00; /* Anaranjado al pasar el cursor */
+    border-color: #ff8f00;
+  }
+  
+  .alert {
+    margin-bottom: 20px; /* Espacio después de las alertas */
+  }
+  
+  .ant-btn-primary {
+    background-color: #f9b233 !important; /* Amarillo suave para el botón */
+    border-color: #f9b233 !important; /* Borde del mismo color */
+  }
+  
+  .ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #ff8f00 !important; /* Anaranjado al pasar el cursor */
+    border-color: #ff8f00 !important;
+  }

@@ -5,7 +5,7 @@ import axiosInstance from '../utils/axiosInstance';
 
 export const getAllProducts = async (): Promise<ProductModel[]> => {
   try {
-    const response = await axiosInstance.get('/allproducts/');
+    const response = await axiosInstance.get('/allproducts');
     return response.data;
   } catch (error) {
     throw new Error('Unable to fetch products');

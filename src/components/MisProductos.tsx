@@ -5,7 +5,7 @@ import { Button, Card, List, Modal, Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { fetchUserProducts, deleteUserProduct, updateUserProduct, createUserProduct } from '../store/slices/productsSlice';
 import { ProductModel } from '../models/models';
-import ProductForm from './ProductForm'
+import ProductForm from './ProductForm';
 import "../styles/misProductos.css";
 
 const MisProductos: React.FC = () => {
@@ -88,7 +88,7 @@ const MisProductos: React.FC = () => {
   const soldProducts = products.filter(product => product.disponibilidad === 'vendido');
 
   return (
-    <div>
+    <div className="mis-productos-container">
       <h2>Mis Productos</h2>
       <Button type="primary" onClick={() => setIsNewModalVisible(true)}>Añadir Nuevo Producto</Button>
 
@@ -138,4 +138,3 @@ const MisProductos: React.FC = () => {
 };
 
 export default MisProductos;
-

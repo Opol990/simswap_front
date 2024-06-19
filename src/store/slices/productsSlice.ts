@@ -32,7 +32,7 @@ export const fetchUserProducts = createAsyncThunk('products/fetchUserProducts', 
 });
 
 export const createUserProduct = createAsyncThunk('products/createUserProduct', async (product: ProductModel) => {
-  const response = await axiosInstance.post('/products', product);
+  const response = await axiosInstance.post('/products/', product);
   return response.data;
 });
 

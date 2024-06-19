@@ -1,8 +1,36 @@
-.sort-options {
-    width: 200px;
-    margin: 20px auto;
-}
+/* src/styles/sortOptions.css */
 
-.sort-options .ant-select {
+.sort-options {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .sort-select {
     width: 100%;
-}
+    max-width: 200px;
+  }
+  
+  .ant-select-selector {
+    background-color: #f9b233 !important; /* Fondo amarillo suave */
+    border-color: #f9b233 !important;
+    color: #333 !important; /* Texto oscuro */
+  }
+  
+  .ant-select-selector:hover {
+    background-color: #ff8f00 !important; /* Anaranjado al pasar el ratón */
+    border-color: #ff8f00 !important;
+  }
+  
+  .ant-select-selection-item {
+    color: #333 !important; /* Texto oscuro */
+  }
+  
+  .ant-select-arrow {
+    color: #333 !important; /* Color de la flecha */
+  }
+  
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: #ff8f00 !important; /* Anaranjado al seleccionar */
+    color: #fff !important; /* Texto blanco */
+  }
+  

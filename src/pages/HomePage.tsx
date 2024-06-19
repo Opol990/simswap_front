@@ -1,4 +1,3 @@
-// src/pages/HomePage.tsx
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -53,32 +52,30 @@ const HomePage: React.FC = () => {
   };
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <div className="text-center p-5">Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error loading products</div>;
+    return <div className="alert alert-danger" role="alert">Error loading products</div>;
   }
 
   return (
-    <Layout>
+    <Layout className="full-height-layout">
       <HeaderComponent />
-      <Content style={{ padding: '0 50px', marginTop: 64 }}>
-        <div className="welcome-banner">
-          <Title level={2} style={{ textAlign: 'center', marginTop: 20 }}>
+      <Content className="container mt-5">
+        <div className="welcome-banner text-center p-3 mb-4">
+          <Title level={2} className="welcome-title">
             ¡Bienvenido a SimSwap!
           </Title>
         </div>
-        <div className="category-sort">
-          <Row justify="space-between" align="middle" style={{ margin: '20px 0' }}>
-            <Col span={18}>
-              <CategoryFilters />
-            </Col>
-            <Col span={6}>
-              <SortOptions />
-            </Col>
-          </Row>
-        </div>
+        <Row justify="space-between" align="middle" className="mb-3">
+          <Col span={18}>
+            <CategoryFilters />
+          </Col>
+          <Col span={6}>
+            <SortOptions />
+          </Col>
+        </Row>
         <div className="site-layout-content">
           <ProductList products={products} onOpenChat={handleOpenChat} />
         </div>

@@ -2,32 +2,46 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Form, Input, Button, Typography, Alert } from 'antd';
-import { login } from '../store/slices/userSlice';  // Importa desde userSlice
+import { Form, Input, Button, Typography, notification } from 'antd';
+import { login } from '../store/slices/userSlice';
 
 const { Title, Text } = Typography;
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (values: { email: string; password: string }) => {
     try {
-      const response = await axios.post('http://localhost:8000/users/login', {
-        email,
-        password,
-      });
+      const response = await axios.post('http://localhost:8000/users/login', values);
       const { token, user } = response.data;
       dispatch(login({ userData: user, token }));
       navigate('/home');  // Redirige a la página de productos
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        setError(error.response.data.detail);
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 401) {
+          notification.error({
+            message: 'Error de autenticación',
+            description: 'Login y contraseña incorrecta',
+          });
+        } else if (error.response) {
+          notification.error({
+            message: 'Error',
+            description: error.response.data.detail,
+          });
+        } else {
+          notification.error({
+            message: 'Error',
+            description: 'Ocurrió un error desconocido',
+          });
+        }
       } else {
-        setError('Ocurrió un error desconocido');
+        notification.error({
+          message: 'Error',
+          description: 'Ocurrió un error desconocido',
+        });
       }
     }
   };
@@ -36,7 +50,6 @@ const LoginPage: React.FC = () => {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div style={{ width: '300px' }}>
         <Title level={2}>Iniciar Sesión</Title>
-        {error && <Alert message={error} type="error" showIcon />}
         <Form layout="vertical" onFinish={handleLogin}>
           <Form.Item
             label="Correo Electrónico"

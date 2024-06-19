@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Dropdown, Button } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
@@ -18,28 +18,20 @@ const HeaderComponent: React.FC = () => {
     navigate('/login');
   };
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="1" onClick={() => navigate('/profile')}>
-        Perfil
-      </Menu.Item>
-      <Menu.Item key="2" onClick={handleLogout}>
-        Cerrar sesión
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
     <Header className="header">
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} className="menu">
-        <Menu.Item key="1" onClick={() => navigate('/home')}>Inicio</Menu.Item>
-      </Menu>
+      <div className="logo" onClick={() => navigate('/home')}>
+        SimSwap
+      </div>
       {currentUser && (
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Button type="text" className="profile-button" style={{ float: 'right' }}>
-            {currentUser.username}
+        <div className="menu-buttons">
+          <Button type="text" onClick={() => navigate('/profile')}>
+            Perfil
           </Button>
-        </Dropdown>
+          <Button type="text" onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
+        </div>
       )}
     </Header>
   );

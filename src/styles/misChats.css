@@ -1,0 +1,46 @@
+/* src/styles/MisChats.css */
+
+.chats-container {
+    background-color: #f5f5f5; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #333; /* Texto oscuro */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .chat-item {
+    background-color: #ffffff; /* Fondo blanco para los ítems de chat */
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-title {
+    margin-left: 10px; /* Margen izquierdo para el texto del producto */
+  }
+  
+  .chat-button-container {
+    margin-left: 10px; /* Margen izquierdo para el botón de abrir chat */
+  }
+  
+  .chat-item .ant-btn-primary {
+    background-color: #f9b233; /* Amarillo suave */
+    border-color: #f9b233;
+    color: #333; /* Texto oscuro */
+  }
+  
+  .chat-item .ant-btn-primary:hover {
+    background-color: #ff8f00; /* Anaranjado al pasar el ratón */
+    border-color: #ff8f00;
+  }
+  
+  .chat-item .ant-list-item-meta-title {
+    color: #333; /* Texto oscuro */
+  }
+  

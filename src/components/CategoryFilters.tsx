@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Space } from 'antd';
+import Slider from 'react-slick';
+import { Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { fetchProducts, filterProductsByCategory } from '../store/slices/productsSlice';
 import { AppDispatch } from '../store/store';
 import axiosInstance from '../utils/axiosInstance';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import '../styles/categoryFilters.css';
 
 const CategoryFilters: React.FC = () => {
@@ -31,15 +34,50 @@ const CategoryFilters: React.FC = () => {
     }
   };
 
+  const settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />
+  };
+
   return (
-    <Space className="category-list" size="middle">
-      {categories.map(category => (
-        <Button key={category} className="category-button" onClick={() => handleCategoryClick(category)}>
-          {category}
-        </Button>
-      ))}
-    </Space>
+    <div className="category-slider-container">
+      <Slider {...settings} className="category-slider">
+        {categories.map(category => (
+          <div key={category} className="category-slide">
+            <Button className="category-button" onClick={() => handleCategoryClick(category)}>
+              {category}
+            </Button>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
+
+function SampleNextArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: 'block', right: 0, zIndex: 2 }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: 'block', left: 0, zIndex: 2 }}
+      onClick={onClick}
+    />
+  );
+}
 
 export default CategoryFilters;

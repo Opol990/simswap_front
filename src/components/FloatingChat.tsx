@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { List, Input, Button, Modal, notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { List, Input, Button, Modal, notification } from 'antd';
 import { RootState, AppDispatch } from '../store/store';
 import { fetchChatMessages, sendMessage } from '../store/slices/chatSlice';
 import axiosInstance from '../utils/axiosInstance';
-import { Message } from '../models/models';
 import "../styles/floatingChat.css";
 
 interface FloatingChatProps {
-  product: { producto_id: number, nombre_producto: string, precio: number };  // Ajustar para incluir nombre y precio
+  product: { producto_id: number, nombre_producto: string, precio: number };
   currentUserId: number;
   sellerId: number;
   onClose: () => void;
@@ -24,7 +23,6 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
   const [otherUserName, setOtherUserName] = useState('');
 
   useEffect(() => {
-    console.log('Fetching chat messages for:', product.producto_id, currentUserId, sellerId);
     dispatch(fetchChatMessages({ productId: product.producto_id, user1Id: currentUserId, user2Id: sellerId }));
 
     const intervalId = setInterval(() => {
@@ -34,7 +32,6 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
 
     axiosInstance.put(`/messages/mark-as-read/${product.producto_id}/${currentUserId}/${sellerId}`);
 
-    // Obtener el id del vendedor y disponibilidad
     axiosInstance.get(`/products/vendedor/${product.producto_id}`)
       .then(response => {
         if (response.data.vendedor_id === currentUserId) {
@@ -48,7 +45,6 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
         console.error('Error fetching vendedor ID and disponibilidad:', error);
       });
 
-    // Obtener el nombre del otro usuario
     const otherUserId = sellerId === currentUserId ? currentUserId : sellerId;
     axiosInstance.get(`/users/${otherUserId}`)
       .then(response => {
@@ -63,12 +59,15 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== '') {
+      const date = new Date();
+      date.setHours(date.getHours() + 2);  // Ajusta la hora sumándole 2 horas
+
       dispatch(sendMessage({
         producto_id: product.producto_id,
         id_usuario_envia: currentUserId,
         id_usuario_recibe: sellerId,
         contenido: newMessage,
-        fecha_envio: new Date(),
+        fecha_envio: date,  // Asegúrate de enviar la fecha en formato ISO
         leido: false
       }));
       setNewMessage('');
@@ -81,12 +80,11 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
         producto_id: product.producto_id,
         comprador_id: currentUserId,
         vendedor_id: sellerId,
-        nombre_producto: product.nombre_producto,  // Pasar el nombre del producto
+        nombre_producto: product.nombre_producto,
         monto: product.precio
       });
 
       if (response.data && response.data.url) {
-        // Guardar la información de la transacción en localStorage
         const transaction = {
           producto_id: product.producto_id,
           comprador_id: currentUserId,
@@ -112,15 +110,15 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
     <div className="floating-chat">
       <div className="chat-header">
         <h3>Chat sobre Producto: {product.nombre_producto}</h3>
-        <Button type="primary" onClick={onClose}>Cerrar</Button>
+        <Button type="primary" onClick={onClose} className="close-button">Cerrar</Button>
       </div>
       <div className="chat-body">
         <List
           dataSource={messages}
-          renderItem={(item: Message) => (
+          renderItem={(item: any) => (
             <List.Item key={item.mensaje_id}>
               <List.Item.Meta
-                title={`${item.id_usuario_envia === currentUserId ? 'Tú' : otherUserName} a las ${new Date(item.fecha_envio).toLocaleTimeString()}`}
+                title={`${item.id_usuario_envia === currentUserId ? 'Tú' : otherUserName} a las ${new Date(item.fecha_envio).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`}
                 description={item.contenido}
               />
             </List.Item>
@@ -134,11 +132,11 @@ const FloatingChat: React.FC<FloatingChatProps> = ({ product, currentUserId, sel
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Escribe tu mensaje aquí..."
         />
-        <Button type="primary" block onClick={handleSendMessage}>
+        <Button type="primary" block onClick={handleSendMessage} className="send-button">
           Enviar
         </Button>
         {!isSeller && isAvailable && (
-          <Button type="primary" block onClick={() => setIsModalVisible(true)}>
+          <Button type="primary" block onClick={() => setIsModalVisible(true)} className="buy-button">
             Comprar
           </Button>
         )}

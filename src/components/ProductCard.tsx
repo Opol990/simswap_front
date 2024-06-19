@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllProducts } from '../api/productsAPI';
 import { ProductModel } from '../models/models';
+import "../styles/productHeader.css";
 
 // Definición del tipo para tus productos
 interface Product {
@@ -30,12 +31,12 @@ const ProductHeader: React.FC = () => {
 
   // Aquí iría el JSX que renderiza tu header y posiblemente una lista o un carrusel de productos
   return (
-    <header>
+    <header className="product-header">
       {/* Aquí podrías mapear y renderizar tus productos */}
       {products.map((product, index) => (
-        <div key={index}>
-          <h2>{product.nombre_producto}</h2>
-          <p>{product.descripcion}</p>
+        <div key={index} className="product-card">
+          <h2 className="product-title">{product.nombre_producto}</h2>
+          <p className="product-description">{product.descripcion}</p>
           {/* Más detalles del producto */}
         </div>
       ))}

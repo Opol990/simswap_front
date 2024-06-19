@@ -16,7 +16,7 @@ const SortOptions: React.FC = () => {
 
     return (
         <div className="sort-options">
-            <Select defaultValue="novedad" style={{ width: 200 }} onChange={handleSortChange}>
+            <Select defaultValue="novedad" className="sort-select" onChange={handleSortChange}>
                 <Option value="novedad">Novedad</Option>
                 <Option value="precio">Precio</Option>
             </Select>

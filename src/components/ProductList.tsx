@@ -10,23 +10,18 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products, onOpenChat }) => {
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} className="product-list">
       {products.map(product => (
-        <Col xs={24} sm={12} md={8} lg={6} key={product.producto_id}>
+        <Col xs={24} sm={12} md={8} lg={6} key={product.producto_id} className="product-col">
           <Card
+            className="product-card"
             title={product.nombre_producto}
-            cover={
-              <img
-                alt={product.nombre_producto}
-                src={product.imagen || '/path-to-default-image/default-image.jpg'}
-              />
-            }
           >
-            <p>{product.marca}</p>
-            <p>{product.modelo}</p>
-            <p>{product.precio} €</p>
-            <p>{product.localizacion}</p>
-            <Button type="primary" onClick={() => onOpenChat(product)}>
+            <p className="product-detail">Marca: {product.marca}</p>
+            <p className="product-detail">Modelo: {product.modelo}</p>
+            <p className="product-detail">Precio: {product.precio} €</p>
+            <p className="product-detail">Localización: {product.localizacion}</p>
+            <Button type="primary" className="chat-button" onClick={() => onOpenChat(product)}>
               Chatear con el vendedor
             </Button>
           </Card>

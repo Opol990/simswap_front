@@ -1,5 +1,55 @@
-.category-sort {
-    margin-top: -100px; /* Ajustamos el margen superior para que los componentes aparezcan justo debajo del header */
-    z-index: 1;
-    position: relative;
+/* src/styles/homePage.css */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.ant-layout {
+  min-height: 100vh; /* Asegura que el layout ocupe toda la altura de la ventana */
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 50px; /* Espacio inferior para que no se pegue al fondo */
+}
+
+.welcome-banner {
+  background-color: #f9b233; /* Fondo amarillo suave */
+  color: #333; /* Texto oscuro */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+  color: #333; /* Texto oscuro */
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.site-layout-content {
+  background: #f5f5f5; /* Fondo gris claro */
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.p-5 {
+  padding: 3rem;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+  padding: 1rem;
+  border-radius: 10px;
 }

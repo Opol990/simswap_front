@@ -1,16 +1,70 @@
 /* src/styles/misProductos.css */
+
+.mis-productos-container {
+  background-color: #f5f5f5; /* Fondo gris claro */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+  color: #333; /* Texto oscuro */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ant-btn-primary {
+  background-color: #f9b233; /* Amarillo suave */
+  border-color: #f9b233;
+  color: #333; /* Texto oscuro */
+}
+
+.ant-btn-primary:hover {
+  background-color: #ff8f00; /* Anaranjado al pasar el ratón */
+  border-color: #ff8f00;
+}
+
 .product-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .sold-product {
-    opacity: 0.6;
-  }
-  
-  .sold-label {
-    color: red;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sold-product {
+  background-color: #f0f0f0; /* Fondo gris claro para productos vendidos */
+  color: #999; /* Texto gris */
+}
+
+.sold-label {
+  color: #ff4d4f; /* Rojo para la etiqueta de vendido */
+  font-weight: bold;
+}
+
+.ant-card {
+  border-radius: 10px;
+}
+
+.ant-card-body {
+  padding: 16px;
+}
+
+.ant-dropdown-link {
+  color: #333; /* Texto oscuro */
+}
+
+.ant-dropdown-link:hover {
+  color: #ff8f00; /* Anaranjado al pasar el ratón */
+}
+
+.ant-modal-content {
+  border-radius: 10px;
+}
+
+.ant-modal-header {
+  background-color: #f9b233; /* Amarillo suave */
+  border-bottom: none;
+}
+
+.ant-modal-title {
+  color: #333; /* Texto oscuro */
+}
